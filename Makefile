@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -std=c99 -Wall -Wextra -pedantic -O2
+CFLAGS = -std=c99 -g -Wall -Wextra -pedantic -O2
 PREFIX = /usr/local
 
 SRC = sysbloom.c info.c
