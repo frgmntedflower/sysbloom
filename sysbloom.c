@@ -15,6 +15,8 @@ const char* MEM_SRC    = "/proc/meminfo";
 struct utsname unameData;
 char hostname[HOST_NAME_MAX + 1];
 
+void print_seperator();
+
 int main() 
 {	
 	FILE* dist_fp;
@@ -46,7 +48,10 @@ int main()
 		DIE("Error reading cpu source");
 	}
 
-
+	gethostname(hostname, sizeof(hostname));
+	char* user = getenv("USER");
+	printf("%s@%s\n", user, hostname);
+	print_seperator();	
 
 	int c;
 	while ((c = fgetc(dist_fp)) != EOF)
@@ -56,10 +61,8 @@ int main()
 		continue;
 	    }
 
-		printf("Buf: %s\n", buf);
 	    if (strcmp(buf, distro_prefix) == 0) {
 		if (c == '"') break;
-		printf("Buf: %s\n", buf);
 
 		size_t dist_size = strlen(dist);
 		if (dist_size + 1 < sizeof(dist)) {
@@ -77,14 +80,12 @@ int main()
 	}	
 	memset(buf, 0, sizeof(buf));
 
-	printf("OS:   %s\n", dist);
+	printf("OS:        %s\n", dist);
 
 	uname(&unameData);
 	printf("Kernel:   %s\n", unameData.release);
 
-	gethostname(hostname, sizeof(hostname));
-	printf("Hostname: %s\n", hostname);
-
+	
 	// SHELL GET ENV
 	char* shell = getenv("SHELL");
 	printf("Shell:    %s\n", shell);
@@ -220,4 +221,7 @@ int main()
 	return 0;
 }
 
-
+void print_seperator()
+{
+	printf("------------------------\n");
+}
