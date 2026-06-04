@@ -1,13 +1,37 @@
 # sysbloom
-a system fetch tool. your system, in bloom.
 
-OS / distro — read /etc/os-release, parse PRETTY_NAME=
-Kernel — uname() syscall, uts.release
-Hostname — gethostname() or uts.nodename from uname()
-Shell — getenv("SHELL")
-Terminal — getenv("TERM")
-Uptime — read /proc/uptime, parse first float
-CPU — read /proc/cpuinfo, find model name line
-Memory — read /proc/meminfo, parse MemTotal and MemAvailable
-WM/DE — getenv("XDG_CURRENT_DESKTOP") or getenv("DISPLAY")
-Username — getenv("USER") or getpwuid(getuid())
+A lightweight system information fetch tool for Linux. Reads from `/proc` and environment variables to display a summary of your system.
+
+## Displayed Info
+
+| Field       | Source |
+|-------------|--------|
+| OS/Distro   | `/etc/os-release` — `PRETTY_NAME` |
+| Kernel      | `uname()` syscall — `uts.release` |
+| Hostname    | `gethostname()` or `uts.nodename` |
+| Shell       | `$SHELL` |
+| Terminal    | `$TERM` |
+| Uptime      | `/proc/uptime` |
+| CPU         | `/proc/cpuinfo` — model name |
+| Memory      | `/proc/meminfo` — MemTotal / MemAvailable |
+| WM/DE       | `$XDG_CURRENT_DESKTOP` or `$DISPLAY` |
+| Username    | `$USER` or `getpwuid(getuid())` |
+
+## Building
+
+Requirements: C99 compiler (GCC or Clang), POSIX environment.
+
+```sh
+make
+sudo make install
+```
+
+The binary is installed to `/usr/local/bin/sysbloom` by default.
+
+## Configuration
+
+Copy `config.def.h` to `config.h` to customise colours, toggle fields, and set an ASCII art banner.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
