@@ -7,6 +7,9 @@ if ! command -v make >/dev/null 2>&1; then
     exit 1
 fi
 
+touch config.h
+cat config.def.h > config.h
+
 make
 sudo make install
 
