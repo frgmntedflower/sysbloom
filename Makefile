@@ -1,27 +1,26 @@
-CC = cc
-CFLAGS = -std=c99 -g -Wall -Wextra -pedantic -O2
-PREFIX = /usr/local
+CC      ?= cc
+CFLAGS  ?= -std=c99 -D_POSIX_C_SOURCE=200809L -Wall -Wextra -O2
+PREFIX  ?= /usr/local
+BINDIR  := $(PREFIX)/bin
 
-SRC = sysbloom.c info.c
-OBJ = $(SRC:.c=.o)
+TARGET  := sysbloom
+SRC     := sysbloom.c
+
+.PHONY: all install uninstall clean
+
+all: config.h $(TARGET)
 
 config.h:
 	cp config.def.h config.h
 
-sysbloom: config.h $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ)
+$(TARGET): $(SRC) sbl.h config.h
+	$(CC) $(CFLAGS) -o $(TARGET) $(SRC)
 
-%.o: %.c config.h
-	$(CC) $(CFLAGS) -c $< -o $@
-
-clean:
-	rm -f sysbloom $(OBJ) config.h
-
-install: sysbloom
-	mkdir -p $(PREFIX)/bin
-	cp sysbloom $(PREFIX)/bin/sysbloom
+install: $(TARGET)
+	install -Dm755 $(TARGET) $(DESTDIR)$(BINDIR)/$(TARGET)
 
 uninstall:
-	rm -f $(PREFIX)/bin/sysbloom
+	rm -f $(DESTDIR)$(BINDIR)/$(TARGET)
 
-.PHONY: clean install uninstall
+clean:
+	rm -f $(TARGET)

@@ -1,23 +1,27 @@
-// config - edit and recompile to configure
+/* sysbloom config
+ *
+ * Copy this file to config.h and edit it to change the defaults.
+ * config.h is gitignored so your local tweaks don't get committed.
+ */
+#ifndef SYSBLOOM_CONFIG_H
+#define SYSBLOOM_CONFIG_H
 
-#define COLOR_LABEL  "\033[1;34m"   // bold blue
-#define COLOR_VALUE  "\033[0m"
-#define COLOR_RESET  "\033[0m"
+/* default colour, dark pink. overridden at runtime by --colour */
+#define DEFAULT_COLOUR_R 199
+#define DEFAULT_COLOUR_G 21
+#define DEFAULT_COLOUR_B 133
 
-// Toggle fields: 1 = show, 0 = hide
-#define SHOW_OS       1
-#define SHOW_KERNEL   1
-#define SHOW_UPTIME   1
-#define SHOW_SHELL    1
-#define SHOW_TERM     1
-#define SHOW_CPU      1
-#define SHOW_MEMORY   1
-#define SHOW_WM       1
+/* toggle which fields get printed */
+#define SHOW_OS 1
+#define SHOW_KERNEL 1
+#define SHOW_SHELL 1
+#define SHOW_TERM 1
+#define SHOW_UPTIME 1
+#define SHOW_CPU 1
+#define SHOW_MEM 1
+#define SHOW_WM 1
 
-static const char *ascii_art[] = {
-    "   /\\   ",
-    "  /  \\  ",
-    " / /\\ \\ ",
-    "/_/  \\_\\",
-    NULL
-};
+/* gap in spaces between the art column and the info column */
+#define ART_GAP 3
+
+#endif /* SYSBLOOM_CONFIG_H */
